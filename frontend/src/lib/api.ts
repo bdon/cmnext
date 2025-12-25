@@ -58,8 +58,10 @@ export class ApiClient {
       ...(options.headers as Record<string, string>),
     };
 
-    if (this.token && !endpoint.includes('/auth/')) {
-      headers['Authorization'] = `Bearer ${this.token}`;
+    // Always check localStorage for the latest token
+    const currentToken = this.getStoredToken();
+    if (currentToken && !endpoint.includes('/auth/')) {
+      headers['Authorization'] = `Bearer ${currentToken}`;
     }
 
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
@@ -131,7 +133,7 @@ export class ApiClient {
   }
 
   isAuthenticated(): boolean {
-    return this.token !== null;
+    return this.getStoredToken() !== null;
   }
 }
 
