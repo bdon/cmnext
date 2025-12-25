@@ -3,7 +3,6 @@ services:
   - type: web
     name: myapp-backend
     runtime: python
-    plan: starter
     region: oregon
     buildCommand: "cd backend && pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
     startCommand: "cd backend && gunicorn config.wsgi:application"
@@ -38,24 +37,24 @@ services:
         value: us-east-1
     healthCheckPath: /api/docs
 
-  # Astro Frontend
-  - type: web
+  # Astro Frontend (Static Site)
+  - type: static
     name: myapp-frontend
-    runtime: node
-    plan: starter
-    region: oregon
     buildCommand: "cd frontend && npm install && npm run build"
-    startCommand: "cd frontend && node ./dist/server/entry.mjs"
+    staticPublishPath: frontend/dist
     envVars:
       - key: NODE_VERSION
         value: 20.11.0
       - key: PUBLIC_API_URL
         value: https://myapp-backend.onrender.com/api
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
 
 databases:
   # You can also use Amazon RDS by removing this and configuring DATABASE_URL manually
   - name: myapp-db
-    plan: starter
     region: oregon
     databaseName: myapp
     user: myapp
