@@ -1,4 +1,6 @@
 ---
+import Navigation from '../components/Navigation';
+
 interface Props {
   title: string;
 }
@@ -137,12 +139,7 @@ const { title } = Astro.props;
     </style>
   </head>
   <body>
-    <nav class="nav">
-      <a href="/">Home</a>
-      <a href="/auth/login">Login</a>
-      <a href="/auth/register">Register</a>
-      <a href="/dashboard">Dashboard</a>
-    </nav>
+    <Navigation client:load />
     <main class="container">
       <slot />
     </main>

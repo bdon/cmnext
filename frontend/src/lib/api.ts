@@ -3,8 +3,6 @@ const API_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:8000/api';
 export interface User {
   id: number;
   email: string;
-  first_name: string;
-  last_name: string;
   is_active: boolean;
   date_joined: string;
 }
@@ -84,17 +82,13 @@ export class ApiClient {
 
   async register(
     email: string,
-    password: string,
-    firstName?: string,
-    lastName?: string
+    password: string
   ): Promise<AuthResponse> {
     const response = await this.request<AuthResponse>('/auth/register', {
       method: 'POST',
       body: JSON.stringify({
         email,
         password,
-        first_name: firstName,
-        last_name: lastName,
       }),
     });
 

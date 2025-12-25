@@ -57,9 +57,6 @@ export default function DashboardView() {
           <div id="user-info">
             <p><strong>Email:</strong> {currentUser().email}</p>
             <p>
-              <strong>Name:</strong> {currentUser().first_name} {currentUser().last_name}
-            </p>
-            <p>
               <strong>Member since:</strong> {formatDate(currentUser().date_joined)}
             </p>
           </div>

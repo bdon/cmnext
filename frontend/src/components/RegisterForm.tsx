@@ -4,8 +4,6 @@ import { apiClient } from '../lib/api';
 export default function RegisterForm() {
   const [email, setEmail] = createSignal<string>('');
   const [password, setPassword] = createSignal<string>('');
-  const [firstName, setFirstName] = createSignal<string>('');
-  const [lastName, setLastName] = createSignal<string>('');
   const [error, setError] = createSignal<string>('');
   const [loading, setLoading] = createSignal<boolean>(false);
 
@@ -15,7 +13,7 @@ export default function RegisterForm() {
     setLoading(true);
 
     try {
-      await apiClient.register(email(), password(), firstName(), lastName());
+      await apiClient.register(email(), password());
       window.location.href = '/dashboard';
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
@@ -53,26 +51,6 @@ export default function RegisterForm() {
             onInput={(e) => setPassword(e.currentTarget.value)}
             required
             minLength={8}
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input
-            type="text"
-            id="firstName"
-            value={firstName()}
-            onInput={(e) => setFirstName(e.currentTarget.value)}
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="lastName">Last Name</label>
-          <input
-            type="text"
-            id="lastName"
-            value={lastName()}
-            onInput={(e) => setLastName(e.currentTarget.value)}
           />
         </div>
 
