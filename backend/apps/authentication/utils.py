@@ -65,7 +65,7 @@ def send_magic_link_email(user: User, magic_link: MagicLink, frontend_url: str):
 
     subject = "Your login link"
     message = f"""
-    Hello {user.first_name or user.email},
+    Hello {user.email},
 
     Click the link below to log in to your account:
 

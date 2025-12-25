@@ -6,8 +6,6 @@ from typing import Optional
 class RegisterSchema(Schema):
     email: str
     password: str
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
 
 
 class LoginSchema(Schema):
@@ -26,8 +24,6 @@ class MagicLinkVerifySchema(Schema):
 class UserSchema(Schema):
     id: int
     email: str
-    first_name: str
-    last_name: str
     is_active: bool
     date_joined: datetime
 

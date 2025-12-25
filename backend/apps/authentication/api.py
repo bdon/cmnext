@@ -39,8 +39,6 @@ def register(request, payload: RegisterSchema):
         user = User.objects.create_user(
             email=payload.email.lower(),
             password=payload.password,
-            first_name=payload.first_name or "",
-            last_name=payload.last_name or "",
         )
 
         access_token = create_access_token(user)
@@ -51,8 +49,6 @@ def register(request, payload: RegisterSchema):
             "user": {
                 "id": user.id,
                 "email": user.email,
-                "first_name": user.first_name,
-                "last_name": user.last_name,
                 "is_active": user.is_active,
                 "date_joined": user.date_joined,
             }
@@ -85,8 +81,6 @@ def login(request, payload: LoginSchema):
         "user": {
             "id": user.id,
             "email": user.email,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
             "is_active": user.is_active,
             "date_joined": user.date_joined,
         }
@@ -125,8 +119,6 @@ def verify_magic_link_endpoint(request, payload: MagicLinkVerifySchema):
         "user": {
             "id": user.id,
             "email": user.email,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
             "is_active": user.is_active,
             "date_joined": user.date_joined,
         }
@@ -139,8 +131,6 @@ def get_current_user(request):
     return 200, {
         "id": request.auth.id,
         "email": request.auth.email,
-        "first_name": request.auth.first_name,
-        "last_name": request.auth.last_name,
         "is_active": request.auth.is_active,
         "date_joined": request.auth.date_joined,
     }
