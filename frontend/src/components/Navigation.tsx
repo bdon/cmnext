@@ -20,6 +20,7 @@ export default function Navigation() {
       {isAuthenticated() ? (
         <>
           <a href="/dashboard">Dashboard</a>
+          <a href="/settings">Settings</a>
           <button
             onClick={handleLogout}
             style={{

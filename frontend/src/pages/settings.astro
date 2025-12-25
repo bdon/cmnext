@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AccountSettings from '../components/AccountSettings';
+---
+
+<Layout title="Account Settings">
+  <div class="card">
+    <AccountSettings client:load />
+  </div>
+</Layout>
