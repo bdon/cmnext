@@ -51,7 +51,7 @@ export default function LoginForm() {
         <div class="success">Magic link sent! Check your email.</div>
       </Show>
 
-      <Show when={!showMagicLink()} fallback={
+      <Show when={showMagicLink()} fallback={
         <form onSubmit={handleLogin}>
           <div class="form-group">
             <label for="email">Email</label>

@@ -5,14 +5,13 @@ from .models import User, MagicLink
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    list_display = ('email', 'first_name', 'last_name', 'is_active', 'is_staff', 'date_joined')
+    list_display = ('email', 'is_active', 'is_staff', 'date_joined')
     list_filter = ('is_active', 'is_staff', 'is_superuser')
-    search_fields = ('email', 'first_name', 'last_name')
+    search_fields = ('email',)
     ordering = ('-date_joined',)
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
