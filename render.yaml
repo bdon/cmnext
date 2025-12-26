@@ -1,7 +1,7 @@
 services:
   # Django Backend API
   - type: web
-    name: myapp-backend
+    name: cmneo-backend
     runtime: python
     region: oregon
     buildCommand: "cd backend && pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
@@ -21,7 +21,7 @@ services:
         generateValue: true
       - key: DATABASE_URL
         fromDatabase:
-          name: myapp-db
+          name: cmneo-db
           property: connectionString
       - key: CORS_ALLOWED_ORIGINS
         sync: false
@@ -37,7 +37,7 @@ services:
 
   # Astro Frontend (Static Site)
   - type: web
-    name: myapp-frontend
+    name: cmneo-frontend
     runtime: static
     buildCommand: "cd frontend && npm install && npm run build"
     staticPublishPath: frontend/dist
@@ -45,11 +45,11 @@ services:
       - key: NODE_VERSION
         value: 20.11.0
       - key: PUBLIC_API_URL
-        value: https://myapp-backend.onrender.com/api
+        value: https://cmneo-backend.onrender.com/api
 
 databases:
   # You can also use Amazon RDS by removing this and configuring DATABASE_URL manually
-  - name: myapp-db
+  - name: cmneo-db
     region: oregon
-    databaseName: myapp
-    user: myapp
+    databaseName: cmneo
+    user: cmneo

@@ -132,7 +132,7 @@ In `render.yaml`, remove the `databases` section:
 ```yaml
 services:
   - type: web
-    name: myapp-backend
+    name: cmneo-backend
     # ... other config
     envVars:
       - key: DATABASE_URL
