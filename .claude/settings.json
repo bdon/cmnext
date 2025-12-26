@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./frontend/public/rtl-text.min.js)"
+    ]
+  }
+}
