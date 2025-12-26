@@ -17,6 +17,18 @@ export interface MessageResponse {
   message: string;
 }
 
+export interface File {
+  id: string;
+}
+
+export interface CreateFileRequest {
+  id: string;
+}
+
+export interface Receipt {
+  id: string;
+}
+
 export class ApiClient {
   private baseUrl: string;
 
@@ -150,6 +162,27 @@ export class ApiClient {
       method: 'POST',
       body: JSON.stringify({ password }),
     });
+  }
+
+  // File management methods
+  async getFiles(): Promise<File[]> {
+    return this.request<File[]>('/files');
+  }
+
+  async getFile(id: string): Promise<File> {
+    return this.request<File>(`/files/${id}`);
+  }
+
+  async createFile(data: CreateFileRequest): Promise<File> {
+    return this.request<File>('/files', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  // Receipt methods
+  async getReceipt(id: string): Promise<Receipt> {
+    return this.request<Receipt>(`/receipts/${id}`);
   }
 }
 
