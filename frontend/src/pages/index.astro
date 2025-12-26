@@ -636,7 +636,7 @@ import worldInterlaken from '../assets/newlayout/cadmapper-world-interlaken-2x.p
     </div>
   </div>
 
-  <script>
+  <script is:inline>
     // Simple Carousel Implementation
     function initCarousel(carouselId, pillContainerId, pillId) {
       const carousel = document.getElementById(carouselId);
@@ -654,8 +654,10 @@ import worldInterlaken from '../assets/newlayout/cadmapper-world-interlaken-2x.p
       function updateCarousel(index) {
         currentIndex = index;
         const offset = -100 * index;
-        container.style.transform = `translateX(${offset}%)`;
-        container.style.transition = 'transform 0.3s ease';
+        if (container) {
+          container.style.transform = `translateX(${offset}%)`;
+          container.style.transition = 'transform 0.3s ease';
+        }
 
         // Update pills
         pills.forEach((pill, i) => {
@@ -668,8 +670,6 @@ import worldInterlaken from '../assets/newlayout/cadmapper-world-interlaken-2x.p
 
         // Update backpill position
         if (backpill && pills[index]) {
-          const pillRect = pills[index].getBoundingClientRect();
-          const containerRect = pillContainer.getBoundingClientRect();
           backpill.style.left = (pills[index].offsetLeft) + 'px';
           backpill.style.width = pills[index].offsetWidth + 'px';
         }
@@ -707,8 +707,9 @@ import worldInterlaken from '../assets/newlayout/cadmapper-world-interlaken-2x.p
     citySpans.forEach(span => {
       span.addEventListener('click', function() {
         const cityName = this.getAttribute('data-name');
-        const sizeMB = this.getAttribute('data-size-mb');
-        modalLabel.textContent = cityName.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        if (!cityName || !modal || !modalLabel || !modalImage || !modalLink) return;
+
+        modalLabel.textContent = cityName.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
         modalImage.src = `/static/frontend/images/cities/${cityName}.png`;
         modalLink.onclick = () => {
           window.location.href = `/download/${cityName}.zip`;
@@ -720,6 +721,7 @@ import worldInterlaken from '../assets/newlayout/cadmapper-world-interlaken-2x.p
 
     dismissButtons.forEach(btn => {
       btn.addEventListener('click', () => {
+        if (!modal) return;
         modal.classList.add('dn');
         modal.classList.remove('show');
       });
