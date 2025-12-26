@@ -2,13 +2,693 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Welcome">
-  <div class="card">
-    <h1>Welcome to My App</h1>
-    <p>A modern web application built with Django, Django Ninja, Astro, and SolidJS.</p>
-    <p style="margin-top: 1rem;">
-      <a href="/auth/login" style="color: #007bff; text-decoration: underline;">Login</a> or
-      <a href="/auth/register" style="color: #007bff; text-decoration: underline;">Register</a> to get started.
-    </p>
+<Layout title="Worldwide map files for any design program | CADMAPPER">
+  <style>
+    .smallHeading {
+      margin-top: 2em;
+      font-family: Quicksand;
+      font-size: 24px;
+      font-weight: 700;
+      color: black;
+    }
+
+    .bg-green {
+      background-color: #DCF4E8;
+    }
+
+    .productKind {
+      padding-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      border-radius: 30px;
+      flex: 1 1 0px;
+    }
+
+    .topPill {
+      position: absolute;
+      top: -9px;
+      max-width: fit-content;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      color: white;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 52px;
+      background-color: #4F00F6;
+      letter-spacing: 2px;
+      font-weight: 300;
+      font-family: Quicksand;
+    }
+
+    .productKind img {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+
+    .pillContainer {
+      box-shadow: 0px 4px 20px 0px rgba(0, 3, 51, 0.10);
+      border-radius:60px;
+      height:60px;
+      padding: 2 6 2 6;
+      z-index: 99;
+      padding-left: 6px;
+      padding-right: 6px;
+    }
+
+    .hoverpill {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      color: black;
+      cursor: pointer;
+    }
+
+    .hoverpill:not(:last-child) {
+      margin-right: 2em;
+    }
+
+    .hoverpill_text {
+      padding-left:20px;
+      padding-right:20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hoverpill.selected {
+      color: white;
+      transition: 0.2s linear;
+    }
+
+    .backpill {
+      border-radius: 60px;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      transition: left 0.2s ease;
+      z-index: -999;
+    }
+
+    .bignum {
+      font-family: Quicksand;
+      font-size: 24px;
+      margin-right: 16px;
+    }
+
+    .softwareIcon {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mt35 {
+      margin-top: 35px;
+    }
+
+    .mw1152 {
+      max-width: 1152px;
+    }
+
+    .embla {
+      overflow: hidden;
+    }
+
+    .embla__container {
+      display: flex;
+    }
+
+    .embla__slide {
+      flex: 0 0 100%;
+      min-width: 0;
+    }
+
+    .embla__slide img {
+      max-height: 800px;
+    }
+
+    .mobileLabel {
+      position: relative;
+      bottom: 40px;
+      background-color: white;
+      border-radius: 16px;
+      padding-left: 16px;
+      padding-right: 16px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+
+    .cityList span {
+      cursor: pointer;
+      padding: 4px 0;
+    }
+
+    .cityList span:hover {
+      text-decoration: underline;
+    }
+
+    #myModal.show {
+      display: block;
+    }
+
+    .z-max {
+      z-index: 9999;
+    }
+
+    .o-20 {
+      opacity: 0.2;
+    }
+
+    .vh-100 {
+      height: 100vh;
+    }
+
+    .dim:hover {
+      opacity: 0.8;
+    }
+
+    .grow:hover {
+      transform: scale(1.05);
+      transition: transform 0.2s;
+    }
+  </style>
+
+  <div class="mw1152 ml-auto mr-auto bg-green flex flex-column tc items-center" style="border-radius: 30px;" id="cmLanding">
+    <span style="margin-top: 55px; color: #4F00F6; font-size: 52px; font-family:'Quicksand';">Save hours of <br/>routine drawing</span>
+    <span class="black ml-auto mr-auto lh-copy" style="max-width: 600px; font-size: 18px; margin-top: 2rem">Get instant CAD files for any location on earth. Transform data from public sources such as OpenStreetMap, NASA, and USGS into neatly organized CAD files. It's as easy as 1, 2, 3.</span>
+    <div class="relative w-100 flex justify-center">
+      <div class="embla" id="intro_carousel">
+        <div class="embla__container">
+          <div class="embla__slide">
+            <img src="/images/newlayout/cadmapper-header-step1.png" alt="Select an area"/>
+            <div class="inline-flex items-center dn-ns mobileLabel"><span class="bignum">1</span>Define any area</div>
+          </div>
+          <div class="embla__slide">
+            <img src="/images/newlayout/cadmapper-header-step2.png" alt="Edit in CAD"/>
+            <div class="inline-flex items-center dn-ns mobileLabel"><span class="bignum">2</span>Edit layers in CAD</div>
+          </div>
+          <div class="embla__slide">
+            <img src="/images/newlayout/cadmapper-header-step3.png" alt="Render in CAD"/>
+            <div class="inline-flex items-center dn-ns mobileLabel"><span class="bignum">3</span>Render your design</div>
+          </div>
+        </div>
+      </div>
+      <div class="dn flex-ns absolute" style="bottom: 60px;">
+        <span class="flex items-center bg-white pillContainer" style="" id="intro">
+          <span class="hoverpill selected"><div id="intropill" class="backpill"></div><span class="hoverpill_text"><span class="bignum">1</span>Use the online tool to define any area</span></span>
+          <span class="hoverpill"><span class="hoverpill_text"><span class="bignum">2</span>Edit a layered drawing file</span></span>
+          <span class="hoverpill"><span class="hoverpill_text"><span class="bignum">3</span>Render in your design software</span></span>
+        </span>
+      </div>
+    </div>
   </div>
+  <div class="black tc" style="font-family: 'Quicksand'; font-size: 24px; margin-top: 70px">
+    Perfect for designers, architects and illustrators
+  </div>
+  <div class="flex flex-wrap flex-nowrap-ns justify-around ml-auto mr-auto mt5 mw1152">
+    <div class="softwareIcon w-50 w-auto-ns tc">
+      <img src="/images/newlayout/cadmapper-autocad.svg" alt="AutoCAD Logo" style="height:90px"/>
+      <span class="black mt35">AutoCAD</span>
+    </div>
+    <div class="softwareIcon w-50 w-auto-ns tc">
+      <img src="/images/newlayout/cadmapper-sketchup.svg" alt="SketchUp Logo" style="height:90px"/>
+      <span class="black mt35">SketchUp 8+</span>
+    </div>
+    <div class="softwareIcon w-50 w-auto-ns tc">
+      <img src="/images/newlayout/cadmapper-rhino.svg" alt="Rhino Logo" style="height:90px"/>
+      <span class="black mt35">Rhinoceros 5+</span>
+    </div>
+    <div class="softwareIcon w-50 w-auto-ns tc">
+      <img src="/images/newlayout/cadmapper-adobeillustrator.svg" alt="Adobe Illustrator Logo" style="height:90px"/>
+      <span class="black mt35">Adobe Illustrator</span>
+    </div>
+  </div>
+  <div class="ml-auto mr-auto flex flex-column items-center tc" style="margin-top: 40px; padding-top: 35px; padding-bottom: 35px; max-width: 568px; background: #FBEBF3; border-radius: 30px; background-image: url(/images/newlayout/pink-background.png); background-size: 800px;">
+    <span class="black" style="font-family: 'Quicksand'; font-size: 24px; font-weight: 700">Get started now</span>
+    <span class="black mt35">Easily create a file now, without the need for a subscription.</span>
+    <a class="white bg-black grow pointer link mt35" href="/pro/" style="border-radius: 52px; padding: 14px 20px 14px 20px;">→ Create File</a>
+  </div>
+  <div class="ml-auto mr-auto mw1152 flex flex-column flex-row-ns justify-between" style="margin-top: 70px">
+    <div class="productKind" style="background-color: #FFF7DA;">
+      <div class="relative" style="height: 0">
+        <span class="topPill">FREE</span>
+      </div>
+      <span class="smallHeading">Whole Cities</span>
+      <img src="/images/newlayout/productkind-1.svg" alt="Whole City File"/>
+      <span class="black lh-copy mw5 ml-auto mr-auto">Over 200 metro road networks. Free and no account required - <a class="black link" href="#metro">download them below!</a></span>
+    </div>
+    <div class="productKind ml4-ns mr4-ns mt4 mb4 mt0-ns mb0-ns" style="background-color: #DCE7FB;">
+      <div class="relative" style="height: 0">
+        <span class="topPill">FREE</span>
+      </div>
+      <span class="smallHeading">Up to 1 km2</span>
+      <img src="/images/newlayout/productkind-2.svg" alt="Free File"/>
+      <span class="black lh-copy mw5 ml-auto mr-auto">Free CAD files include all available data in any format. <br/><a class="black link" href="/pro/signup">Sign up to download.</a></span>
+    </div>
+    <div class="productKind" style="background-color: #DBF5E8;">
+      <span class="smallHeading">Up to 100 km2</span>
+      <img src="/images/newlayout/productkind-3.svg" alt="Premium File"/>
+      <span class="black lh-copy mw5 ml-auto mr-auto">Available for a small fee. A discount is applied if you <a class="black link" href="/pro/signup">register with an academic email address.</a></span>
+    </div>
+  </div>
+  <div class="grid flex mt35 flex-column ml-auto mr-auto items-center mw1152 tc" style="border-radius: 30px; background-color: #FBEBF3">
+    <span class="smallHeading">Around the world</span>
+    <p class="black">Building height and topography information is available in many locations.</p>
+    <div class="relative w-100 flex justify-center mt2">
+      <div id="atw_carousel" class="embla">
+        <div class="embla__container">
+          <div class="embla__slide">
+            <img src="/images/newlayout/cadmapper-world-hongkong-2x.png" alt="Hong Kong"/>
+            <div class="inline-flex items-center dn-ns mobileLabel">Hong Kong</div>
+          </div>
+          <div class="embla__slide">
+            <img src="/images/newlayout/cadmapper-world-copenhagen-2x.png" alt="Copenhagen"/>
+            <div class="inline-flex items-center dn-ns mobileLabel">Copenhagen</div>
+          </div>
+          <div class="embla__slide">
+            <img src="/images/newlayout/cadmapper-world-lima-2x.png" alt="Lima"/>
+            <div class="inline-flex items-center dn-ns mobileLabel">Lima</div>
+          </div>
+          <div class="embla__slide">
+            <img src="/images/newlayout/cadmapper-world-london-2x.png" alt="London"/>
+            <div class="inline-flex items-center dn-ns mobileLabel">London</div>
+          </div>
+          <div class="embla__slide">
+            <img src="/images/newlayout/cadmapper-world-newdelhi-2x.png" alt="New Delhi"/>
+            <div class="inline-flex items-center dn-ns mobileLabel">New Delhi</div>
+          </div>
+          <div class="embla__slide">
+            <img src="/images/newlayout/cadmapper-world-interlaken-2x.png" alt="Interlaken"/>
+            <div class="inline-flex items-center dn-ns mobileLabel">Interlaken</div>
+          </div>
+        </div>
+      </div>
+      <div class="dn flex-ns absolute" style="bottom: 60px;">
+        <span class="flex items-center bg-white pillContainer" style="" id="atw">
+          <span class="hoverpill selected"><div id="atwpill" class="backpill"></div><span class="hoverpill_text">Hong Kong</span></span>
+          <span class="hoverpill"><span class="hoverpill_text">Copenhagen</span></span>
+          <span class="hoverpill"><span class="hoverpill_text">Lima</span></span>
+          <span class="hoverpill"><span class="hoverpill_text">London</span></span>
+          <span class="hoverpill"><span class="hoverpill_text">New Delhi</span></span>
+          <span class="hoverpill"><span class="hoverpill_text">Interlaken</span></span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="w-100 ml-auto mr-auto flex flex-column items-center mw1152" id="metro" style="border-radius: 30px; background-color: #F9F3ED; margin-top: 40px; margin-bottom: 40px">
+    <div class="relative" style="height: 0">
+      <span class="topPill">FREE</span>
+    </div>
+    <span class="smallHeading" style="color: #4F00F6;">Download our Whole City Files</span>
+    <p class="tc lh-copy mw6 black">These are huge and simplified two-dimensional DXF files of metropolitan area road networks, which include 3 levels of roads as polylines, as well as bodies of water.</p>
+    <div class="flex black w-100 justify-around lh-copy pa3 pa5-ns flex-wrap flex-nowrap-ns">
+      <div class="continent w-100 w-auto-ns">
+        <span class="fw6">Africa</span>
+        <div class="flex flex-column cityList">
+          <span data-name="abuja" data-size-mb="1">abuja</span>
+          <span data-name="addis-abeba" data-size-mb="1">addis-abeba</span>
+          <span data-name="bejaia" data-size-mb="1">bejaia</span>
+          <span data-name="cairo" data-size-mb="2">cairo</span>
+          <span data-name="dakar" data-size-mb="3">dakar</span>
+          <span data-name="dar-es-salaam" data-size-mb="1">dar-es-salaam</span>
+          <span data-name="harare" data-size-mb="2">harare</span>
+          <span data-name="johannesburg" data-size-mb="5">johannesburg</span>
+          <span data-name="kampala" data-size-mb="2">kampala</span>
+          <span data-name="kigali" data-size-mb="1">kigali</span>
+          <span data-name="lagos" data-size-mb="1">lagos</span>
+          <span data-name="mogadishu" data-size-mb="1">mogadishu</span>
+          <span data-name="nairobi" data-size-mb="2">nairobi</span>
+        </div>
+      </div>
+      <div class="continent w-100 w-auto-ns">
+        <span class="fw6">Asia</span>
+        <div class="flex flex-column cityList">
+          <span data-name="almaty" data-size-mb="2">almaty</span>
+          <span data-name="ankara" data-size-mb="5">ankara</span>
+          <span data-name="bangkok" data-size-mb="8">bangkok</span>
+          <span data-name="batticaloa" data-size-mb="2">batticaloa</span>
+          <span data-name="beijing" data-size-mb="5">beijing</span>
+          <span data-name="bengaluru" data-size-mb="2">bengaluru</span>
+          <span data-name="chelyabinsk" data-size-mb="6">chelyabinsk</span>
+          <span data-name="chengdu" data-size-mb="1">chengdu</span>
+          <span data-name="chennai" data-size-mb="2">chennai</span>
+          <span data-name="chongqing" data-size-mb="2">chongqing</span>
+          <span data-name="colombo" data-size-mb="2">colombo</span>
+          <span data-name="dhaka" data-size-mb="2">dhaka</span>
+          <span data-name="dharamshala" data-size-mb="1">dharamshala</span>
+          <span data-name="dushanbe" data-size-mb="1">dushanbe</span>
+          <span data-name="hangzhou" data-size-mb="1">hangzhou</span>
+          <span data-name="hiroshima" data-size-mb="8">hiroshima</span>
+          <span data-name="hong-kong" data-size-mb="12">hong-kong</span>
+          <span data-name="islamabad" data-size-mb="3">islamabad</span>
+          <span data-name="karachi" data-size-mb="2">karachi</span>
+          <span data-name="kathmandu" data-size-mb="8">kathmandu</span>
+          <span data-name="kolkata" data-size-mb="4">kolkata</span>
+          <span data-name="kuala-lumpur" data-size-mb="5">kuala-lumpur</span>
+          <span data-name="lahore" data-size-mb="2">lahore</span>
+          <span data-name="manila" data-size-mb="12">manila</span>
+          <span data-name="mumbai" data-size-mb="3">mumbai</span>
+          <span data-name="nazareth" data-size-mb="2">nazareth</span>
+          <span data-name="new-delhi" data-size-mb="4">new-delhi</span>
+          <span data-name="osaka-kyoto" data-size-mb="34">osaka-kyoto</span>
+          <span data-name="perm" data-size-mb="2">perm</span>
+          <span data-name="pyongyang" data-size-mb="2">pyongyang</span>
+          <span data-name="rangoon" data-size-mb="2">rangoon</span>
+          <span data-name="samarkand" data-size-mb="2">samarkand</span>
+          <span data-name="seoul" data-size-mb="6">seoul</span>
+          <span data-name="shanghai" data-size-mb="10">shanghai</span>
+          <span data-name="siem-reap" data-size-mb="1">siem-reap</span>
+          <span data-name="singapore" data-size-mb="5">singapore</span>
+          <span data-name="taipei" data-size-mb="4">taipei</span>
+          <span data-name="tehran" data-size-mb="3">tehran</span>
+          <span data-name="tokyo" data-size-mb="103">tokyo</span>
+          <span data-name="tyumen" data-size-mb="2">tyumen</span>
+        </div>
+      </div>
+      <div class="continent w-100 w-auto-ns">
+        <span class="fw6">Europe</span>
+        <div class="flex flex-column cityList">
+          <span data-name="amsterdam" data-size-mb="85">amsterdam</span>
+          <span data-name="asti" data-size-mb="1">asti</span>
+          <span data-name="athens" data-size-mb="11">athens</span>
+          <span data-name="avignon" data-size-mb="7">avignon</span>
+          <span data-name="barcelona" data-size-mb="12">barcelona</span>
+          <span data-name="berlin" data-size-mb="51">berlin</span>
+          <span data-name="bilbao" data-size-mb="5">bilbao</span>
+          <span data-name="birmingham" data-size-mb="34">birmingham</span>
+          <span data-name="bordeaux" data-size-mb="39">bordeaux</span>
+          <span data-name="brno" data-size-mb="14">brno</span>
+          <span data-name="brussels" data-size-mb="32">brussels</span>
+          <span data-name="bucharest" data-size-mb="6">bucharest</span>
+          <span data-name="budapest" data-size-mb="13">budapest</span>
+          <span data-name="cagliari" data-size-mb="5">cagliari</span>
+          <span data-name="cantabria" data-size-mb="12">cantabria</span>
+          <span data-name="cardiff-newport-bristol-bath" data-size-mb="12">cardiff-newport-bristol-bath</span>
+          <span data-name="colchester" data-size-mb="6">colchester</span>
+          <span data-name="copenhagen" data-size-mb="22">copenhagen</span>
+          <span data-name="edinburgh" data-size-mb="5">edinburgh</span>
+          <span data-name="florence" data-size-mb="5">florence</span>
+          <span data-name="frankfurt" data-size-mb="72">frankfurt</span>
+          <span data-name="gdansk" data-size-mb="10">gdansk</span>
+          <span data-name="genoa" data-size-mb="9">genoa</span>
+          <span data-name="gijon" data-size-mb="8">gijon</span>
+          <span data-name="glasgow" data-size-mb="8">glasgow</span>
+          <span data-name="grand-avignon" data-size-mb="23">grand-avignon</span>
+          <span data-name="hamburg" data-size-mb="35">hamburg</span>
+          <span data-name="helsinki" data-size-mb="15">helsinki</span>
+          <span data-name="istanbul" data-size-mb="8">istanbul</span>
+          <span data-name="karlsruhe" data-size-mb="30">karlsruhe</span>
+          <span data-name="kirovograd" data-size-mb="1">kirovograd</span>
+          <span data-name="krakow" data-size-mb="8">krakow</span>
+          <span data-name="kyiv" data-size-mb="7">kyiv</span>
+          <span data-name="la-rochelle" data-size-mb="4">la-rochelle</span>
+          <span data-name="leeds" data-size-mb="4">leeds</span>
+          <span data-name="lille" data-size-mb="41">lille</span>
+          <span data-name="lisbon" data-size-mb="11">lisbon</span>
+          <span data-name="ljubljana" data-size-mb="3">ljubljana</span>
+          <span data-name="london" data-size-mb="68">london</span>
+          <span data-name="lucca" data-size-mb="1">lucca</span>
+          <span data-name="lviv" data-size-mb="5">lviv</span>
+          <span data-name="lyon" data-size-mb="100">lyon</span>
+          <span data-name="madrid" data-size-mb="19">madrid</span>
+          <span data-name="manchester" data-size-mb="9">manchester</span>
+          <span data-name="marseille" data-size-mb="56">marseille</span>
+          <span data-name="matera" data-size-mb="2">matera</span>
+          <span data-name="milan" data-size-mb="15">milan</span>
+          <span data-name="monaco" data-size-mb="2">monaco</span>
+          <span data-name="montpellier" data-size-mb="50">montpellier</span>
+          <span data-name="moscow" data-size-mb="34">moscow</span>
+          <span data-name="munich" data-size-mb="55">munich</span>
+          <span data-name="nantes" data-size-mb="34">nantes</span>
+          <span data-name="newcastle" data-size-mb="7">newcastle</span>
+          <span data-name="nice" data-size-mb="5">nice</span>
+          <span data-name="nuremberg" data-size-mb="22">nuremberg</span>
+          <span data-name="odessa" data-size-mb="3">odessa</span>
+          <span data-name="oslo" data-size-mb="27">oslo</span>
+          <span data-name="palermo" data-size-mb="7">palermo</span>
+          <span data-name="paris" data-size-mb="168">paris</span>
+          <span data-name="pistoia" data-size-mb="2">pistoia</span>
+          <span data-name="porto" data-size-mb="5">porto</span>
+          <span data-name="prague" data-size-mb="39">prague</span>
+          <span data-name="reykjavik" data-size-mb="6">reykjavik</span>
+          <span data-name="riga" data-size-mb="11">riga</span>
+          <span data-name="rome" data-size-mb="10">rome</span>
+          <span data-name="rotterdam" data-size-mb="81">rotterdam</span>
+          <span data-name="saint-jean-bonnefonds" data-size-mb="2">saint-jean-bonnefonds</span>
+          <span data-name="samara-tolyatti" data-size-mb="9">samara-tolyatti</span>
+          <span data-name="sarajevo" data-size-mb="3">sarajevo</span>
+          <span data-name="sochi" data-size-mb="5">sochi</span>
+          <span data-name="sofia" data-size-mb="5">sofia</span>
+          <span data-name="st-petersburg" data-size-mb="22">st-petersburg</span>
+          <span data-name="stockholm" data-size-mb="26">stockholm</span>
+          <span data-name="strasbourg" data-size-mb="23">strasbourg</span>
+          <span data-name="tampere" data-size-mb="7">tampere</span>
+          <span data-name="toulouse" data-size-mb="49">toulouse</span>
+          <span data-name="trento" data-size-mb="2">trento</span>
+          <span data-name="turin" data-size-mb="3">turin</span>
+          <span data-name="venice" data-size-mb="58">venice</span>
+          <span data-name="vienna" data-size-mb="24">vienna</span>
+          <span data-name="vienna-bratislava" data-size-mb="60">vienna-bratislava</span>
+          <span data-name="warsaw" data-size-mb="13">warsaw</span>
+          <span data-name="wroclaw" data-size-mb="16">wroclaw</span>
+        </div>
+      </div>
+      <div class="continent w-100 w-auto-ns">
+        <span class="fw6">Middle East</span>
+        <div class="flex flex-column cityList">
+          <span data-name="as-suwayda" data-size-mb="1">as-suwayda</span>
+          <span data-name="baghdad" data-size-mb="2">baghdad</span>
+          <span data-name="damascus" data-size-mb="2">damascus</span>
+          <span data-name="dubai-abu-dhabi" data-size-mb="10">dubai-abu-dhabi</span>
+          <span data-name="kabul" data-size-mb="1">kabul</span>
+          <span data-name="riyadh" data-size-mb="3">riyadh</span>
+          <span data-name="tel-aviv" data-size-mb="5">tel-aviv</span>
+          <span data-name="yerevan" data-size-mb="2">yerevan</span>
+        </div>
+      </div>
+      <div class="continent w-100 w-auto-ns">
+        <span class="fw6">North America</span>
+        <div class="flex flex-column cityList">
+          <span data-name="atlanta" data-size-mb="28">atlanta</span>
+          <span data-name="austin" data-size-mb="5">austin</span>
+          <span data-name="boston" data-size-mb="113">boston</span>
+          <span data-name="calgary" data-size-mb="6">calgary</span>
+          <span data-name="charlotte" data-size-mb="8">charlotte</span>
+          <span data-name="chattanooga" data-size-mb="3">chattanooga</span>
+          <span data-name="chicago" data-size-mb="60">chicago</span>
+          <span data-name="cincinnati" data-size-mb="13">cincinnati</span>
+          <span data-name="cleveland" data-size-mb="12">cleveland</span>
+          <span data-name="columbus-oh" data-size-mb="7">columbus-oh</span>
+          <span data-name="dallas" data-size-mb="19">dallas</span>
+          <span data-name="dc-baltimore" data-size-mb="50">dc-baltimore</span>
+          <span data-name="denver-boulder" data-size-mb="18">denver-boulder</span>
+          <span data-name="detroit" data-size-mb="14">detroit</span>
+          <span data-name="edmonton" data-size-mb="6">edmonton</span>
+          <span data-name="evansville" data-size-mb="2">evansville</span>
+          <span data-name="grand-rapids-holland-muskegon" data-size-mb="3">grand-rapids-holland-muskegon</span>
+          <span data-name="grassvalley" data-size-mb="1">grassvalley</span>
+          <span data-name="honolulu" data-size-mb="1">honolulu</span>
+          <span data-name="houston" data-size-mb="18">houston</span>
+          <span data-name="humboldt-ca" data-size-mb="9">humboldt-ca</span>
+          <span data-name="indianapolis" data-size-mb="8">indianapolis</span>
+          <span data-name="kamloops" data-size-mb="4">kamloops</span>
+          <span data-name="kansas-city-lawrence-topeka" data-size-mb="13">kansas-city-lawrence-topeka</span>
+          <span data-name="las-vegas" data-size-mb="4">las-vegas</span>
+          <span data-name="lexington" data-size-mb="2">lexington</span>
+          <span data-name="los-angeles" data-size-mb="34">los-angeles</span>
+          <span data-name="louisville" data-size-mb="2">louisville</span>
+          <span data-name="macon-ga" data-size-mb="4">macon-ga</span>
+          <span data-name="madison" data-size-mb="4">madison</span>
+          <span data-name="managua" data-size-mb="1">managua</span>
+          <span data-name="mexico-city" data-size-mb="3">mexico-city</span>
+          <span data-name="miami" data-size-mb="10">miami</span>
+          <span data-name="milwaukee" data-size-mb="4">milwaukee</span>
+          <span data-name="mobile-al" data-size-mb="2">mobile-al</span>
+          <span data-name="montreal" data-size-mb="11">montreal</span>
+          <span data-name="mpls-stpaul" data-size-mb="22">mpls-stpaul</span>
+          <span data-name="nashville" data-size-mb="7">nashville</span>
+          <span data-name="new-orleans" data-size-mb="23">new-orleans</span>
+          <span data-name="new-york" data-size-mb="72">new-york</span>
+          <span data-name="ottawa" data-size-mb="6">ottawa</span>
+          <span data-name="philadelphia" data-size-mb="17">philadelphia</span>
+          <span data-name="phoenix" data-size-mb="16">phoenix</span>
+          <span data-name="pittsburgh" data-size-mb="12">pittsburgh</span>
+          <span data-name="port-au-prince" data-size-mb="2">port-au-prince</span>
+          <span data-name="portland" data-size-mb="11">portland</span>
+          <span data-name="portland-me" data-size-mb="1">portland-me</span>
+          <span data-name="reno" data-size-mb="2">reno</span>
+          <span data-name="sacramento" data-size-mb="7">sacramento</span>
+          <span data-name="san-diego-tijuana" data-size-mb="7">san-diego-tijuana</span>
+          <span data-name="san-francisco" data-size-mb="24">san-francisco</span>
+          <span data-name="santa-barbara" data-size-mb="5">santa-barbara</span>
+          <span data-name="santo-domingo" data-size-mb="2">santo-domingo</span>
+          <span data-name="seattle" data-size-mb="40">seattle</span>
+          <span data-name="sf-bay-area" data-size-mb="59">sf-bay-area</span>
+          <span data-name="springfield-mo" data-size-mb="1">springfield-mo</span>
+          <span data-name="st-louis" data-size-mb="12">st-louis</span>
+          <span data-name="state-college-pa" data-size-mb="4">state-college-pa</span>
+          <span data-name="tampa" data-size-mb="11">tampa</span>
+          <span data-name="terre-haute" data-size-mb="1">terre-haute</span>
+          <span data-name="toronto" data-size-mb="24">toronto</span>
+          <span data-name="tucson" data-size-mb="2">tucson</span>
+          <span data-name="vancouver" data-size-mb="10">vancouver</span>
+          <span data-name="victoria" data-size-mb="6">victoria</span>
+        </div>
+      </div>
+      <div class="continent w-100 w-auto-ns">
+        <span class="fw6">Oceania</span>
+        <div class="flex flex-column cityList">
+          <span data-name="adelaide" data-size-mb="2">adelaide</span>
+          <span data-name="auckland" data-size-mb="5">auckland</span>
+          <span data-name="brisbane" data-size-mb="4">brisbane</span>
+          <span data-name="canberra" data-size-mb="2">canberra</span>
+          <span data-name="darwin" data-size-mb="1">darwin</span>
+          <span data-name="jakarta" data-size-mb="7">jakarta</span>
+          <span data-name="melbourne" data-size-mb="26">melbourne</span>
+          <span data-name="perth" data-size-mb="3">perth</span>
+          <span data-name="sydney" data-size-mb="8">sydney</span>
+        </div>
+      </div>
+      <div class="continent w-100 w-auto-ns">
+        <span class="fw6">South America</span>
+        <div class="flex flex-column cityList">
+          <span data-name="bogota" data-size-mb="5">bogota</span>
+          <span data-name="brasilia-brazil" data-size-mb="2">brasilia-brazil</span>
+          <span data-name="buenos-aires" data-size-mb="8">buenos-aires</span>
+          <span data-name="campo-grande" data-size-mb="1">campo-grande</span>
+          <span data-name="caracas" data-size-mb="2">caracas</span>
+          <span data-name="cartagena" data-size-mb="2">cartagena</span>
+          <span data-name="cobija-bolivia" data-size-mb="1">cobija-bolivia</span>
+          <span data-name="cochabamba-bolivia" data-size-mb="2">cochabamba-bolivia</span>
+          <span data-name="curitiba-brazil" data-size-mb="2">curitiba-brazil</span>
+          <span data-name="lapaz-bolivia" data-size-mb="2">lapaz-bolivia</span>
+          <span data-name="lima" data-size-mb="4">lima</span>
+          <span data-name="medellin" data-size-mb="2">medellin</span>
+          <span data-name="oruro-bolivia" data-size-mb="1">oruro-bolivia</span>
+          <span data-name="porto-alegre" data-size-mb="2">porto-alegre</span>
+          <span data-name="potosi-bolivia" data-size-mb="1">potosi-bolivia</span>
+          <span data-name="quito-ecuador" data-size-mb="3">quito-ecuador</span>
+          <span data-name="rio-de-janeiro" data-size-mb="7">rio-de-janeiro</span>
+          <span data-name="santacruz-bolivia" data-size-mb="1">santacruz-bolivia</span>
+          <span data-name="santiago" data-size-mb="5">santiago</span>
+          <span data-name="sao-paulo" data-size-mb="12">sao-paulo</span>
+          <span data-name="sucre-bolivia" data-size-mb="1">sucre-bolivia</span>
+          <span data-name="tarija-bolivia" data-size-mb="1">tarija-bolivia</span>
+          <span data-name="trinidad-bolivia" data-size-mb="1">trinidad-bolivia</span>
+          <span data-name="trinidad-tobago" data-size-mb="3">trinidad-tobago</span>
+        </div>
+      </div>
+    </div>
+    <div class="fixed top-0 left-0 right-0 bottom-0 dn" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="fixed bg-black o-20 top-0 left-0 right-0 bottom-0 pointer myModalDismiss"></div>
+      <div class="flex vh-100 items-center justify-center" role="document">
+        <div class="bg-white z-max">
+          <div class="pa3 f2" id="myModalLabel">City Name</div>
+          <div class="">
+            <img class="w-100" id="myModalImage" alt="city preview" src=""/>
+          </div>
+          <div class="pa3">
+            <button type="button" class="dim bg-cmbluebutton fw5 pv3 ph4 white ba bw0" id="myModalLink">DOWNLOAD ZIP</button>
+            <button type="button" class="dim b--navy fw5 pv3 ph4 white ba bg-white navy ml3 myModalDismiss" data-dismiss="modal">CLOSE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple Carousel Implementation
+    function initCarousel(carouselId, pillContainerId, pillId) {
+      const carousel = document.getElementById(carouselId);
+      if (!carousel) return;
+
+      const container = carousel.querySelector('.embla__container');
+      const slides = carousel.querySelectorAll('.embla__slide');
+      const pillContainer = document.getElementById(pillContainerId);
+      const pills = pillContainer ? pillContainer.querySelectorAll('.hoverpill') : [];
+      const backpill = document.getElementById(pillId);
+
+      let currentIndex = 0;
+      const slideCount = slides.length;
+
+      function updateCarousel(index) {
+        currentIndex = index;
+        const offset = -100 * index;
+        container.style.transform = `translateX(${offset}%)`;
+        container.style.transition = 'transform 0.3s ease';
+
+        // Update pills
+        pills.forEach((pill, i) => {
+          if (i === index) {
+            pill.classList.add('selected');
+          } else {
+            pill.classList.remove('selected');
+          }
+        });
+
+        // Update backpill position
+        if (backpill && pills[index]) {
+          const pillRect = pills[index].getBoundingClientRect();
+          const containerRect = pillContainer.getBoundingClientRect();
+          backpill.style.left = (pills[index].offsetLeft) + 'px';
+          backpill.style.width = pills[index].offsetWidth + 'px';
+        }
+      }
+
+      // Add click handlers to pills
+      pills.forEach((pill, index) => {
+        pill.addEventListener('click', () => {
+          updateCarousel(index);
+        });
+      });
+
+      // Auto-rotate carousel every 5 seconds
+      setInterval(() => {
+        const nextIndex = (currentIndex + 1) % slideCount;
+        updateCarousel(nextIndex);
+      }, 5000);
+
+      // Initialize
+      updateCarousel(0);
+    }
+
+    // Initialize both carousels
+    initCarousel('intro_carousel', 'intro', 'intropill');
+    initCarousel('atw_carousel', 'atw', 'atwpill');
+
+    // Modal functionality
+    const modal = document.getElementById('myModal');
+    const modalLabel = document.getElementById('myModalLabel');
+    const modalImage = document.getElementById('myModalImage');
+    const modalLink = document.getElementById('myModalLink');
+    const citySpans = document.querySelectorAll('.cityList span[data-name]');
+    const dismissButtons = document.querySelectorAll('.myModalDismiss');
+
+    citySpans.forEach(span => {
+      span.addEventListener('click', function() {
+        const cityName = this.getAttribute('data-name');
+        const sizeMB = this.getAttribute('data-size-mb');
+        modalLabel.textContent = cityName.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        modalImage.src = `/static/frontend/images/cities/${cityName}.png`;
+        modalLink.onclick = () => {
+          window.location.href = `/download/${cityName}.zip`;
+        };
+        modal.classList.remove('dn');
+        modal.classList.add('show');
+      });
+    });
+
+    dismissButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        modal.classList.add('dn');
+        modal.classList.remove('show');
+      });
+    });
+  </script>
 </Layout>

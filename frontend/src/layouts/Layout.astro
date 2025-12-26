@@ -15,6 +15,10 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400&family=Quicksand:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"/>
     <title>{title}</title>
     <style is:global>
       * {
@@ -24,10 +28,32 @@ const { title } = Astro.props;
       }
 
       body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        font-size: 14px;
+        font-family: Mulish, sans-serif;
         line-height: 1.6;
         color: #333;
         background: #f5f5f5;
+      }
+
+      .grid {
+        background-size: 20px 20px;
+        background-image: linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px);
+      }
+
+      .bg-cmbluelightest {
+        background-color:#f3f5f8;
+      }
+
+      .bg-cmbluelight {
+        background-color:#D7DEEA;
+      }
+
+      .bg-cmbluebutton {
+        background-color:#093581;
+      }
+
+      .bg-tan {
+        background-color: #F9F3ED;
       }
 
       .container {
